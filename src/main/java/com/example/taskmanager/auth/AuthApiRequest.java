@@ -1,7 +1,7 @@
 package com.example.taskmanager.auth;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -13,10 +13,10 @@ import lombok.*;
 public class AuthApiRequest {
 
     @Email(message = "email not valid")
-    @NotBlank(message = "email is required")
+    @NotNull(message = "email is required")
     private String email;
 
-    @NotBlank(message = "password is required")
+    @NotNull(message = "password is required")
     @Size(min = 8, message = "password is too short - min 8 chars")
     @Size(max = 1_000, message = "password is too long")
     @ToString.Exclude
