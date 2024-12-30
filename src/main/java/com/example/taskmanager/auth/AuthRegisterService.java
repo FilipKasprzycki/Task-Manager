@@ -5,11 +5,16 @@ import com.example.taskmanager.db.entity.User;
 import com.example.taskmanager.db.manager.UserManager;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.Sha512Hash;
+import org.apache.shiro.lang.util.ByteSource;
 
 import java.util.Optional;
 
 @Slf4j
 class AuthRegisterService {
+
+    private static final String PEPPER = "4x#i$@hi%EWY#D8d:;45}#=]/9L+F!?$";
 
     @Inject
     private UserManager userManager;
@@ -26,7 +31,10 @@ class AuthRegisterService {
             throw new Http400BadRequestException("User already exists");
         }
 
-        User user = userMapper.map(request);
+        ByteSource salt = new SecureRandomNumberGenerator().nextBytes();
+        String hashedPassword = new Sha512Hash(PEPPER + request.getPassword(), salt, 2_000_000).toHex();
+
+        User user = userMapper.map(request, hashedPassword, salt.toHex());
         userManager.persist(user);
     }
 }

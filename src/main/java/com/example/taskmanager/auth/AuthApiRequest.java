@@ -18,7 +18,7 @@ public class AuthApiRequest {
 
     @NotNull(message = "password is required")
     @Size(min = 8, message = "password is too short - min 8 chars")
-    @Size(max = 1_000, message = "password is too long")
+    @Size(max = 64, message = "password is too long - max 64 chars")
     @ToString.Exclude
     private String password;
 }
