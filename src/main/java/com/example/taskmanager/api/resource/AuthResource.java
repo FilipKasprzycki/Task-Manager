@@ -1,7 +1,7 @@
 package com.example.taskmanager.api.resource;
 
-import com.example.taskmanager.auth.AuthApiRequest;
 import com.example.taskmanager.auth.AuthService;
+import com.example.taskmanager.auth.entity.AuthApiRequest;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -30,6 +30,17 @@ public class AuthResource {
         log.info("[{}] {} {}", context.getMethod(), context.getPathInfo(), request);
 
         authService.register(request);
+
+        return Response.ok().build();
+    }
+
+    @POST
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response login(@Valid AuthApiRequest request) {
+        log.info("[{}] {} {}", context.getMethod(), context.getPathInfo(), request);
+
+        authService.login(request);
 
         return Response.ok().build();
     }

@@ -1,4 +1,4 @@
-package com.example.taskmanager.auth;
+package com.example.taskmanager.auth.entity;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

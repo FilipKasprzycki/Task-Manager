@@ -15,9 +15,7 @@ abstract class HttpExceptionMapper<E extends Throwable> implements ExceptionMapp
                 .build();
     }
 
-    Object getExceptionMessage(E exception) {
-        return exception.getMessage();
-    }
+    abstract Object getExceptionMessage(E exception);
 
     abstract Response.Status getResponseStatus();
 }

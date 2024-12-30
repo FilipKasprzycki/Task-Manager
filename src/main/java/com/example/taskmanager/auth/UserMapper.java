@@ -1,5 +1,6 @@
 package com.example.taskmanager.auth;
 
+import com.example.taskmanager.auth.entity.AuthApiRequest;
 import com.example.taskmanager.db.entity.User;
 
 class UserMapper {
