@@ -23,6 +23,7 @@
         <!-- Lib versions -->
         <jakarta.version>10.0.0</jakarta.version>
         <jjwt.version>0.12.6</jjwt.version>
+        <lang3.version>3.17.0</lang3.version>
         <lombok.version>1.18.36</lombok.version>
         <postgresql.version>42.7.4</postgresql.version>
         <shiro.version>2.0.2</shiro.version>
@@ -57,6 +58,13 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${lang3.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
