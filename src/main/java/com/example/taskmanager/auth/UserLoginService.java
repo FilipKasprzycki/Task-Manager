@@ -4,6 +4,7 @@ import com.example.taskmanager.auth.entity.AuthApiRequest;
 import com.example.taskmanager.auth.exception.UserLoginException;
 import com.example.taskmanager.db.entity.User;
 import com.example.taskmanager.db.manager.UserManager;
+import com.example.taskmanager.jwt.JwtCreator;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +17,10 @@ class UserLoginService {
     @Inject
     private PasswordHash passwordHash;
 
-    void login(AuthApiRequest request) {
+    @Inject
+    private JwtCreator jwtCreator;
+
+    String login(AuthApiRequest request) {
         String email = request.getEmail().trim().toLowerCase();
         User user = userManager.findByEmail(email)
                 .orElseThrow(() -> new UserLoginException("Not found user by email: [" + email + "]"));
@@ -28,5 +32,6 @@ class UserLoginService {
         }
 
         log.info("User [{}] successfully logged", email);
+        return jwtCreator.createToken(email);
     }
 }

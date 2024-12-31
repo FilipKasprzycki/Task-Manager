@@ -18,7 +18,7 @@ public class AuthService {
         registerService.register(request);
     }
 
-    public void login(AuthApiRequest request) {
-        loginService.login(request);
+    public String login(AuthApiRequest request) {
+        return loginService.login(request);
     }
 }

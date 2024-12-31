@@ -13,6 +13,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 
+import static jakarta.ws.rs.core.HttpHeaders.AUTHORIZATION;
+
 @Slf4j
 @Path("/auth")
 public class AuthResource {
@@ -40,8 +42,10 @@ public class AuthResource {
     public Response login(@Valid AuthApiRequest request) {
         log.info("[{}] {} {}", context.getMethod(), context.getPathInfo(), request);
 
-        authService.login(request);
+        String jwt = authService.login(request);
 
-        return Response.ok().build();
+        return Response.ok()
+                .header(AUTHORIZATION, "Bearer " + jwt)
+                .build();
     }
 }
