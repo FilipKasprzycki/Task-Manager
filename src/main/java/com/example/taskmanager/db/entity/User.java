@@ -15,10 +15,13 @@ import java.util.UUID;
                 @UniqueConstraint(columnNames = "email")
         })
 @NamedQuery(name = User.FIND_BY_EMAIL, query = "SELECT u FROM User u WHERE u.email = :email")
+@NamedQuery(name = User.FIND_BY_UUID, query = "SELECT u FROM User u WHERE u.uuid = :uuid")
 public class User extends SuperEntity {
 
     public final static String FIND_BY_EMAIL = "User.FindByEmail";
+    public final static String FIND_BY_UUID = "User.FindByUuid";
 
+    @Column(columnDefinition = "UUID")
     private UUID uuid;
 
     private String email;
