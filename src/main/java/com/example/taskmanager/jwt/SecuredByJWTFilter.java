@@ -22,9 +22,9 @@ import java.util.Date;
 
 @Slf4j
 @Provider
-@JwtAuth
+@SecuredByJWT
 @Priority(Priorities.AUTHENTICATION)
-public class JwtAuthFilter implements ContainerRequestFilter {
+public class SecuredByJWTFilter implements ContainerRequestFilter {
 
     private static final String BEARER = "Bearer ";
     private static final String HMAC_SHA512 = "HS512";
