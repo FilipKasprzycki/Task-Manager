@@ -31,7 +31,7 @@ class UserLoginService {
             throw new UserLoginException("Incorrect password for user [" + email + "]");
         }
 
-        log.info("User [{}] successfully logged", email);
-        return jwtCreator.createToken(email);
+        log.info("User [{} - {}] successfully logged", email, user.getUuid());
+        return jwtCreator.createToken(user.getUuid().toString());
     }
 }
