@@ -1,12 +1,12 @@
 package com.example.taskmanager.task;
 
-import com.example.taskmanager.api.exception.UserNotFoundException;
 import com.example.taskmanager.db.entity.User;
 import com.example.taskmanager.db.manager.UserManager;
 import com.example.taskmanager.jwt.AuthorizedUser;
 import com.example.taskmanager.task.entity.TaskApiResponse;
 import com.example.taskmanager.task.entity.TaskCreateApiRequest;
 import com.example.taskmanager.task.entity.TaskUpdateApiRequest;
+import com.example.taskmanager.task.exception.UserNotFoundException;
 import jakarta.inject.Inject;
 
 import java.util.List;

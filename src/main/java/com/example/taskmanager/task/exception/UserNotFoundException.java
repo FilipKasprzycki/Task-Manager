@@ -1,4 +1,4 @@
-package com.example.taskmanager.api.exception;
+package com.example.taskmanager.task.exception;
 
 public class UserNotFoundException extends RuntimeException {
 
