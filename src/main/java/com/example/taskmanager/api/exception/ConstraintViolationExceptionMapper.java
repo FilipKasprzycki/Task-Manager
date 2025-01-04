@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 public class ConstraintViolationExceptionMapper extends HttpExceptionMapper<ConstraintViolationException> {
 
     @Override
-    Response.Status getResponseStatus() {
+    protected Response.Status getResponseStatus() {
         return Response.Status.BAD_REQUEST;
     }
 
     @Override
-    Object getExceptionMessage(ConstraintViolationException exception) {
+    protected Object getExceptionMessage(ConstraintViolationException exception) {
         return exception.getConstraintViolations()
                 .stream()
                 .map(ConstraintViolation::getMessage)

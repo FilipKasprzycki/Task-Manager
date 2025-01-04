@@ -40,8 +40,8 @@ public class TaskService {
         return taskGetService.get(findAuthorizedUser(), taskUuid);
     }
 
-    public List<TaskApiResponse> getAll() {
-        return taskGetService.getAll(findAuthorizedUser());
+    public List<TaskApiResponse> getAll(Boolean isCompleted, String deadlineFrom, String deadlineTo) {
+        return taskGetService.getAll(findAuthorizedUser(), isCompleted, deadlineFrom, deadlineTo);
     }
 
     public void delete(UUID uuid) {

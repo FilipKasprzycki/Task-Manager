@@ -8,12 +8,12 @@ import jakarta.ws.rs.ext.Provider;
 public class NotFoundExceptionMapper extends HttpExceptionMapper<NotFoundException> {
 
     @Override
-    Object getExceptionMessage(NotFoundException exception) {
+    protected Object getExceptionMessage(NotFoundException exception) {
         return "Not found";
     }
 
     @Override
-    Response.Status getResponseStatus() {
+    protected Response.Status getResponseStatus() {
         return Response.Status.NOT_FOUND;
     }
 }

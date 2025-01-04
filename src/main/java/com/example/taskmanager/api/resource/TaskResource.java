@@ -47,9 +47,13 @@ public class TaskResource {
     }
 
     @GET
-    public List<TaskApiResponse> getAll() {
+    public List<TaskApiResponse> getAll(
+            @QueryParam("completed") Boolean isCompleted,
+            @QueryParam("deadlineFrom") String deadlineFrom,
+            @QueryParam("deadlineTo") String deadlineTo
+    ) {
         log.info("[{}] {}", context.getMethod(), context.getPathInfo());
-        List<TaskApiResponse> response = taskService.getAll();
+        List<TaskApiResponse> response = taskService.getAll(isCompleted, deadlineFrom, deadlineTo);
         log.info("Response: {} tasks", response.size());
         return response;
     }

@@ -5,9 +5,11 @@ import com.example.taskmanager.db.entity.User;
 import com.example.taskmanager.task.entity.TaskUpdateApiRequest;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,10 +29,32 @@ public class TaskManager {
                 .findFirst();
     }
 
-    public List<Task> findByUser(User user) {
-        return entityManager.createNamedQuery(Task.FIND_BY_USER, Task.class)
-                .setParameter("user", user)
-                .getResultList();
+    public List<Task> findByUserAndFilter(User user, Boolean isCompleted, LocalDateTime deadlineFrom, LocalDateTime deadlineTo) {
+        StringBuilder queryBuilder = new StringBuilder("SELECT t FROM Task t WHERE t.user = :user");
+        if (isCompleted != null) {
+            queryBuilder.append(" AND t.isCompleted = :isCompleted");
+        }
+        if (deadlineFrom != null) {
+            queryBuilder.append(" AND t.deadline >= :deadlineFrom");
+        }
+        if (deadlineTo != null) {
+            queryBuilder.append(" AND t.deadline <= :deadlineTo");
+        }
+
+        TypedQuery<Task> query = entityManager.createQuery(queryBuilder.toString(), Task.class)
+                .setParameter("user", user);
+
+        if (isCompleted != null) {
+            query.setParameter("isCompleted", isCompleted);
+        }
+        if (deadlineFrom != null) {
+            query.setParameter("deadlineFrom", deadlineFrom);
+        }
+        if (deadlineTo != null) {
+            query.setParameter("deadlineTo", deadlineTo);
+        }
+
+        return query.getResultList();
     }
 
     @Transactional

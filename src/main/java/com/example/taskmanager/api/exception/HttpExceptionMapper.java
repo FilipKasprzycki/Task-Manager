@@ -5,7 +5,7 @@ import jakarta.ws.rs.ext.ExceptionMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-abstract class HttpExceptionMapper<E extends Throwable> implements ExceptionMapper<E> {
+public abstract class HttpExceptionMapper<E extends Throwable> implements ExceptionMapper<E> {
 
     @Override
     public Response toResponse(E exception) {
@@ -15,7 +15,7 @@ abstract class HttpExceptionMapper<E extends Throwable> implements ExceptionMapp
                 .build();
     }
 
-    abstract Object getExceptionMessage(E exception);
+    protected abstract Object getExceptionMessage(E exception);
 
-    abstract Response.Status getResponseStatus();
+    protected abstract Response.Status getResponseStatus();
 }

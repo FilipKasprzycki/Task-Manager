@@ -7,12 +7,12 @@ import jakarta.ws.rs.ext.Provider;
 public class UserNotFoundExceptionMapper extends HttpExceptionMapper<UserNotFoundException> {
 
     @Override
-    Object getExceptionMessage(UserNotFoundException exception) {
+    protected Object getExceptionMessage(UserNotFoundException exception) {
         return "Unauthorized";
     }
 
     @Override
-    Response.Status getResponseStatus() {
+    protected Response.Status getResponseStatus() {
         return Response.Status.UNAUTHORIZED;
     }
 
