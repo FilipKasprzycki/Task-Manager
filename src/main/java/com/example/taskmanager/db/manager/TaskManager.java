@@ -2,9 +2,11 @@ package com.example.taskmanager.db.manager;
 
 import com.example.taskmanager.db.entity.Task;
 import com.example.taskmanager.db.entity.User;
+import com.example.taskmanager.task.entity.TaskUpdateApiRequest;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,5 +41,16 @@ public class TaskManager {
     @Transactional
     public void delete(UUID uuid, User user) {
         findByUuidAndUser(uuid, user).ifPresent(entityManager::remove);
+    }
+
+    @Transactional
+    public void update(User user, TaskUpdateApiRequest request) {
+        Task task = findByUuidAndUser(request.getUuid(), user)
+                .orElseThrow(() -> new NotFoundException(String.format("not found task [UUID: %s] for user [UUID: %s]", request.getUuid(), user.getUuid())));
+
+        task.setTitle(request.getTitle());
+        task.setDescription(request.getDescription());
+        task.setDeadline(request.getDeadline());
+        task.setCompleted(request.getIsCompleted());
     }
 }

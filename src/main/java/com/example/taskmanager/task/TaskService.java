@@ -2,6 +2,7 @@ package com.example.taskmanager.task;
 
 import com.example.taskmanager.task.entity.TaskApiResponse;
 import com.example.taskmanager.task.entity.TaskCreateApiRequest;
+import com.example.taskmanager.task.entity.TaskUpdateApiRequest;
 import jakarta.inject.Inject;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public class TaskService {
     @Inject
     private TaskDeleteService taskDeleteService;
 
+    @Inject
+    private TaskUpdateService taskUpdateService;
+
     public void create(TaskCreateApiRequest request) {
         taskCreateService.create(request);
     }
@@ -32,5 +36,9 @@ public class TaskService {
 
     public void delete(UUID uuid) {
         taskDeleteService.delete(uuid);
+    }
+
+    public void update(TaskUpdateApiRequest request) {
+        taskUpdateService.update(request);
     }
 }

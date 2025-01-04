@@ -4,8 +4,10 @@ import com.example.taskmanager.jwt.SecuredByJWT;
 import com.example.taskmanager.task.TaskService;
 import com.example.taskmanager.task.entity.TaskApiResponse;
 import com.example.taskmanager.task.entity.TaskCreateApiRequest;
+import com.example.taskmanager.task.entity.TaskUpdateApiRequest;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -58,6 +60,14 @@ public class TaskResource {
         log.info("[{}] {}", context.getMethod(), context.getPathInfo());
         taskService.delete(uuid);
         log.info("Task [UUID: {}] removed", uuid);
+        return Response.ok().build();
+    }
+
+    @PUT
+    public Response update(@Valid TaskUpdateApiRequest request) {
+        log.info("[{}] {} {}", context.getMethod(), context.getPathInfo(), request);
+        taskService.update(request);
+        log.info("Task [UUID: {}] updated", request.getUuid());
         return Response.ok().build();
     }
 }
