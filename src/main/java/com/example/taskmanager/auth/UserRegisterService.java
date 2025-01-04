@@ -28,7 +28,7 @@ class UserRegisterService {
         String salt = passwordHash.getSalt();
         String hashedPassword = passwordHash.calculateHash(request.getPassword(), salt);
 
-        User user = userMapper.map(request, hashedPassword, salt);
+        User user = userMapper.map(email, hashedPassword, salt);
         userManager.persist(user);
     }
 

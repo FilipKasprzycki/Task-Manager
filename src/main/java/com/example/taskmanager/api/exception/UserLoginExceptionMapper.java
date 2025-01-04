@@ -8,12 +8,12 @@ import jakarta.ws.rs.ext.Provider;
 public class UserLoginExceptionMapper extends HttpExceptionMapper<UserLoginException> {
 
     @Override
-    Response.Status getResponseStatus() {
+    protected Response.Status getResponseStatus() {
         return Response.Status.FORBIDDEN;
     }
 
     @Override
-    Object getExceptionMessage(UserLoginException exception) {
+    protected Object getExceptionMessage(UserLoginException exception) {
         return "Login failed - invalid email or password";
     }
 }

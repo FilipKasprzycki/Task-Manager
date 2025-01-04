@@ -19,12 +19,13 @@ import org.apache.commons.lang3.StringUtils;
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.UUID;
 
 @Slf4j
 @Provider
-@JwtAuth
+@SecuredByJWT
 @Priority(Priorities.AUTHENTICATION)
-public class JwtAuthFilter implements ContainerRequestFilter {
+public class SecuredByJWTFilter implements ContainerRequestFilter {
 
     private static final String BEARER = "Bearer ";
     private static final String HMAC_SHA512 = "HS512";
@@ -35,15 +36,20 @@ public class JwtAuthFilter implements ContainerRequestFilter {
     @Inject
     private DateConverter dateConverter;
 
+    @Inject
+    private AuthorizedUser authorizedUser;
+
     @Override
     public void filter(ContainerRequestContext requestContext) {
         log.info("Authorizing request to secure context [{} {}]", requestContext.getMethod(), requestContext.getUriInfo().getAbsolutePath().toString());
         String jwt = getJwtFromHeader(requestContext);
         SecretKey signatureKey = jwtSignatureKeyProvider.getSignatureKey();
-        validate(jwt, signatureKey);
+        UUID userUuid = validate(jwt, signatureKey);
+        authorizedUser.setUserUuid(userUuid);
+        log.info("JWT for [{}] is correct", userUuid);
     }
 
-    private void validate(String jwt, SecretKey signatureKey) {
+    private UUID validate(String jwt, SecretKey signatureKey) {
         try {
             Jws<Claims> claims = Jwts.parser()
                     .verifyWith(signatureKey)
@@ -51,8 +57,7 @@ public class JwtAuthFilter implements ContainerRequestFilter {
                     .parseSignedClaims(jwt);
 
             validateHeader(claims.getHeader());
-            String subject = validatePayload(claims.getPayload());
-            log.info("JWT for [{}] is correct", subject);
+            return validatePayload(claims.getPayload());
         } catch (Exception e) {
             throw new JwtAuthorizationException(String.format("Exception: %s, message: %s", e.getClass().getName(), e.getMessage()));
         }
@@ -67,7 +72,7 @@ public class JwtAuthFilter implements ContainerRequestFilter {
         }
     }
 
-    private String validatePayload(Claims payload) {
+    private UUID validatePayload(Claims payload) {
         if (payload == null) {
             throw new JwtAuthorizationException("JWT payload is null");
         }
@@ -81,7 +86,7 @@ public class JwtAuthFilter implements ContainerRequestFilter {
         if (StringUtils.isBlank(subject)) {
             throw new JwtAuthorizationException("Subject not provided");
         }
-        return subject;
+        return UUID.fromString(subject);
     }
 
     private String getJwtFromHeader(ContainerRequestContext requestContext) {

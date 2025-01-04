@@ -8,12 +8,12 @@ import jakarta.ws.rs.ext.Provider;
 public class JwtAuthorizationExceptionMapper extends HttpExceptionMapper<JwtAuthorizationException> {
 
     @Override
-    Object getExceptionMessage(JwtAuthorizationException exception) {
+    protected Object getExceptionMessage(JwtAuthorizationException exception) {
         return "Authorization failed";
     }
 
     @Override
-    Response.Status getResponseStatus() {
+    protected Response.Status getResponseStatus() {
         return Response.Status.UNAUTHORIZED;
     }
 }
