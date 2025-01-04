@@ -10,6 +10,7 @@ import com.example.taskmanager.task.entity.TaskApiResponse;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
 
+import java.util.List;
 import java.util.UUID;
 
 class TaskGetService {
@@ -34,5 +35,16 @@ class TaskGetService {
                 .orElseThrow(() -> new NotFoundException(String.format("Not found task [UUID: %s] for user [UUID: %s]", taskUuid, user.getUuid())));
 
         return taskMapper.map(task);
+    }
+
+    List<TaskApiResponse> getAll() {
+        User user = userManager.findByUuid(authorizedUser.getUserUuid())
+                .orElseThrow(() -> new UserNotFoundException(String.format("Not found user with UUID [%s]", authorizedUser.getUserUuid())));
+
+        List<Task> tasks = taskManager.findByUser(user);
+
+        return tasks.stream()
+                .map(taskMapper::map)
+                .toList();
     }
 }

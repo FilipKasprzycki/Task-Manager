@@ -9,7 +9,7 @@ public class NotFoundExceptionMapper extends HttpExceptionMapper<NotFoundExcepti
 
     @Override
     Object getExceptionMessage(NotFoundException exception) {
-        return null;
+        return "Not found";
     }
 
     @Override

@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,8 +25,19 @@ public class TaskManager {
                 .findFirst();
     }
 
+    public List<Task> findByUser(User user) {
+        return entityManager.createNamedQuery(Task.FIND_BY_USER, Task.class)
+                .setParameter("user", user)
+                .getResultList();
+    }
+
     @Transactional
     public void persist(Task task) {
         entityManager.persist(task);
+    }
+
+    @Transactional
+    public void delete(UUID uuid, User user) {
+        findByUuidAndUser(uuid, user).ifPresent(entityManager::remove);
     }
 }
