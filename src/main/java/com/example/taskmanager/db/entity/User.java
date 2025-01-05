@@ -1,6 +1,7 @@
 package com.example.taskmanager.db.entity;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "api_user",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "uuid"),
