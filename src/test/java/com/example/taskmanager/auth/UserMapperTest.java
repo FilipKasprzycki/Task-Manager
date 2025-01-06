@@ -10,11 +10,11 @@ class UserMapperTest {
     @Test
     void map() {
         User expected = new User();
-        expected.setEmail("jan.kowalski@gmail.com");
+        expected.setEmail("jan.kowalski@example.com");
         expected.setPassword("Password1!");
         expected.setSalt("b608bd32994b3d44ec0d7172ded2c8cb");
 
-        User user = new UserMapper().map("jan.kowalski@gmail.com", "Password1!", "b608bd32994b3d44ec0d7172ded2c8cb");
+        User user = new UserMapper().map("jan.kowalski@example.com", "Password1!", "b608bd32994b3d44ec0d7172ded2c8cb");
         assertEquals(expected, user);
     }
 }

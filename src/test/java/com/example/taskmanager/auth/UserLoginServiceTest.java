@@ -50,17 +50,17 @@ class UserLoginServiceTest {
     void login_emailNotFound() {
         // given
         AuthApiRequest request = new AuthApiRequest();
-        request.setEmail("jan.kowalski@gmail.com");
+        request.setEmail("jan.kowalski@example.com");
         request.setPassword("Password1!");
 
-        when(userManager.findByEmail("jan.kowalski@gmail.com")).thenReturn(Optional.empty());
+        when(userManager.findByEmail("jan.kowalski@example.com")).thenReturn(Optional.empty());
 
         // when
         Executable executable = () -> sut.login(request);
 
         // then
         assertThrows(UserLoginException.class, executable);
-        verify(userManager).findByEmail("jan.kowalski@gmail.com");
+        verify(userManager).findByEmail("jan.kowalski@example.com");
         verifyNoMoreInteractions(userManager);
         verifyNoInteractions(passwordHash, jwtCreator);
     }
@@ -69,7 +69,7 @@ class UserLoginServiceTest {
     void login_passwordNotCorrect() {
         // given
         AuthApiRequest request = new AuthApiRequest();
-        request.setEmail("jan.kowalski@gmail.com");
+        request.setEmail("jan.kowalski@example.com");
         request.setPassword("Password1!");
 
         User user = new User();
@@ -77,7 +77,7 @@ class UserLoginServiceTest {
         user.setSalt("b608bd32994b3d44ec0d7172ded2c8cb");
         user.setUuid(UUID.fromString("30d46e88-157b-422a-b6a8-9431e1231c15"));
 
-        when(userManager.findByEmail("jan.kowalski@gmail.com")).thenReturn(Optional.of(user));
+        when(userManager.findByEmail("jan.kowalski@example.com")).thenReturn(Optional.of(user));
         when(passwordHash.calculateHash("Password1!", "b608bd32994b3d44ec0d7172ded2c8cb"))
                 .thenReturn("c71ddb1a1a14d70aa09d46666fc9554b29c1dcfe5aa8191c277550accfd18e215cd920dd9621");
 
@@ -86,7 +86,7 @@ class UserLoginServiceTest {
 
         // then
         assertThrows(UserLoginException.class, executable);
-        verify(userManager).findByEmail("jan.kowalski@gmail.com");
+        verify(userManager).findByEmail("jan.kowalski@example.com");
         verify(passwordHash).calculateHash("Password1!", "b608bd32994b3d44ec0d7172ded2c8cb");
         verifyNoMoreInteractions(userManager, passwordHash);
         verifyNoInteractions(jwtCreator);
@@ -96,7 +96,7 @@ class UserLoginServiceTest {
     void login() {
         // given
         AuthApiRequest request = new AuthApiRequest();
-        request.setEmail(" Jan.Kowalski@gmail.com ");
+        request.setEmail(" Jan.Kowalski@example.com ");
         request.setPassword("Password1!");
 
         User user = new User();
@@ -104,7 +104,7 @@ class UserLoginServiceTest {
         user.setSalt("b608bd32994b3d44ec0d7172ded2c8cb");
         user.setUuid(UUID.fromString("30d46e88-157b-422a-b6a8-9431e1231c15"));
 
-        when(userManager.findByEmail("jan.kowalski@gmail.com")).thenReturn(Optional.of(user));
+        when(userManager.findByEmail("jan.kowalski@example.com")).thenReturn(Optional.of(user));
         when(passwordHash.calculateHash("Password1!", "b608bd32994b3d44ec0d7172ded2c8cb"))
                 .thenReturn("35b2a70aebb9f753b28ac36c285581ea6c841f036163660fe17c89c981400acc0927f3b655b9");
         when(jwtCreator.createToken("30d46e88-157b-422a-b6a8-9431e1231c15"))
@@ -115,7 +115,7 @@ class UserLoginServiceTest {
 
         // then
         assertEquals("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5MmRjY2ZkOC0zNjMxLTRkNTItOGM1NC1iNWM3NGE0ZTFmM2IiLCJleHAiOjE3MzYwNjA4ODB9.SykcNHF0_Fqg-le1-mve76cW00cjNKl_Y3wZWIEreGwnXqjGzqyVgi5mbqGaAou3JGqVhgEmQIo3xjmjxWYpoA", actual);
-        verify(userManager).findByEmail("jan.kowalski@gmail.com");
+        verify(userManager).findByEmail("jan.kowalski@example.com");
         verify(passwordHash).calculateHash("Password1!", "b608bd32994b3d44ec0d7172ded2c8cb");
         verify(jwtCreator).createToken("30d46e88-157b-422a-b6a8-9431e1231c15");
         verifyNoMoreInteractions(userManager, passwordHash, jwtCreator);
