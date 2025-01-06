@@ -53,7 +53,8 @@ public class TaskService {
     }
 
     private User findAuthorizedUser() {
-        return userManager.findByUuid(authorizedUser.getUserUuid())
-                .orElseThrow(() -> new UserNotFoundException(String.format("Not found user with UUID [%s]", authorizedUser.getUserUuid())));
+        UUID userUuid = authorizedUser.getUserUuid();
+        return userManager.findByUuid(userUuid)
+                .orElseThrow(() -> new UserNotFoundException(String.format("Not found user with UUID [%s]", userUuid)));
     }
 }
