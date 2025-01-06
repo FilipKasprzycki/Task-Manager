@@ -1,6 +1,6 @@
-package com.example.taskmanager.api.exception;
+package com.example.taskmanager.auth.exception;
 
-import com.example.taskmanager.auth.exception.UserLoginException;
+import com.example.taskmanager.api.exception.HttpExceptionMapper;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 

@@ -1,6 +1,7 @@
 package com.example.taskmanager.db.entity;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 @MappedSuperclass
 abstract class SuperEntity {
 

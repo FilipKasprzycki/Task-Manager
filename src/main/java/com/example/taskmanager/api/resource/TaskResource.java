@@ -31,7 +31,7 @@ public class TaskResource {
     private TaskService taskService;
 
     @POST
-    public Response create(TaskCreateApiRequest request) {
+    public Response create(@Valid TaskCreateApiRequest request) {
         log.info("[{}] {} {}", context.getMethod(), context.getPathInfo(), request);
         taskService.create(request);
         return Response.ok().build();
