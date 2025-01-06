@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 class UserRegisterServiceTest {
 
-    private AutoCloseable closable;
+    private AutoCloseable closeable;
 
     @Mock
     private UserManager userManager;
@@ -35,12 +35,12 @@ class UserRegisterServiceTest {
 
     @BeforeEach
     void setUp() {
-        closable = MockitoAnnotations.openMocks(this);
+        closeable = MockitoAnnotations.openMocks(this);
     }
 
     @AfterEach
     void close() throws Exception {
-        closable.close();
+        closeable.close();
     }
 
     @Test

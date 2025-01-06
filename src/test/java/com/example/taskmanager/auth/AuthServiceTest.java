@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 
 class AuthServiceTest {
 
-    private AutoCloseable closable;
+    private AutoCloseable closeable;
 
     @Mock
     private UserRegisterService registerService;
@@ -27,12 +27,12 @@ class AuthServiceTest {
 
     @BeforeEach
     void setUp() {
-        closable = MockitoAnnotations.openMocks(this);
+        closeable = MockitoAnnotations.openMocks(this);
     }
 
     @AfterEach
     void close() throws Exception {
-        closable.close();
+        closeable.close();
     }
 
     @Test
